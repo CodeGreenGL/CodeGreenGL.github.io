@@ -1,2 +1,2 @@
-# CodeGreenGL.github.io-
+# CodeGreenGL.github.io
 Live application repository
