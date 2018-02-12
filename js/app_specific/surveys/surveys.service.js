@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('surveysjs')
+        .module('surveyModule')
         .factory('surveysSrvc', surveysSrvc);
 
     surveysSrvc.$inject = [
@@ -21,7 +21,7 @@
             service = {},
             getAllSurveys = function () {
                 var deferred = $q.defer();
-
+                
                 $http({
                     url: 'https://codegreen.restlet.net/v1/surveys/',
                     headers: {
@@ -36,7 +36,7 @@
                     console.error('Error while fetching notes');
                     console.error(response);
                 });
-
+                
                 return deferred.promise;
             };
 
@@ -57,7 +57,7 @@
             return surveysArray.length;
         };
 
-        service.getSectionAt = function (index) {
+        service.getSurveyAt = function (index) {
             return angular.copy(surveysArray[index]);
         };
         

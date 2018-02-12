@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('questionsjs')
+        .module('surveyModule')
         .controller('questionsDetailCtrl', control);
 
     control.$inject = [
@@ -17,19 +17,11 @@
         $stateParams,
         questionsSrvc
     ) {
-        var params = $stateParams,
-            vm = angular.extend(this, {
-                question: {
-                    questionText: "no text",
-                    questionType: "no type"
-                }
-            });
-
-        vm.done = function () {
-            $state.go('questions_list');
-        };
-
-        vm.question = questionsSrvc.getQuestionAt(params.selected);
-
+        angular.extend(this, {
+            question: questionsSrvc.getQuestionAt($stateParams.selected),
+            submitButton: function () {
+                $state.go('questions_list');
+            }
+        });
     }
 }());

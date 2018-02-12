@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('sectionsjs')
+        .module('surveyModule')
         .controller('sectionsDetailCtrl', control);
 
     control.$inject = [
@@ -17,19 +17,11 @@
         $stateParams,
         sectionsSrvc
     ) {
-        var params = $stateParams,
-            vm = angular.extend(this, {
-                section: {
-                    heading: "no text",
-                    introductionMessage: "no type"
-                }
-            });
-            
-        vm.updateSection = function () {
-            $state.go('sections_list');
-        };
-
-        vm.section = sectionsSrvc.getSectionAt(params.selected);
-            
+        angular.extend(this, {
+            section: sectionsSrvc.getSectionAt($stateParams.selected),
+            submitButton: function () {
+                $state.go('sections_list');
+            }
+        });
     }
 }());
