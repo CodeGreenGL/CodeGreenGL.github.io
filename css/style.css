@@ -1,5 +1,5 @@
 .pane {
-    background-color: #eceff1;
+    background-color: #f2f2f2;
 }
 
 .bar {
@@ -295,13 +295,127 @@ md-list-item {
     padding-right: 0px;
 }
 
-.homePageButton{
+.homePageButton, .homePageButtonSurvey{
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 5px;
+    background-color: #40a653 !important;
 }
 
-.homePageButton:hover{
-    background-color: #3266c9 !important;
+
+.homePageButton:hover, .homePageButtonSurvey:hover{
+    background-color: #158638 !important;
 }
+
+.bar.bar-dark.bar-footer{
+    background-color: #f7f7f7;
+    border-top: none;
+    box-shadow: -1px -1px 2px lightgray;
+}
+
+.addButttonHolder{
+    width: 240px;
+    height: 45px;
+    position: fixed;
+    right: 0;
+}
+
+.addNewButton, .addNewButtonSingleButton{
+    width: 50%;
+    height: 44px;
+    background-color: #40a653;
+    border: none;
+    color: white;
+    float: right;
+}
+
+
+.addFromExisitingButton{
+    width: 50%;
+    height: 44px;
+    background-color: #158638;
+    border: none;
+    color: white;
+    float: left;
+}
+
+.detailsHolder, .detailsHolderButton{
+    width: 600px;
+    max-width: 100%;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.detailsHolderButton{
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.confirmEditButton{
+    width: 120px;
+    height: 45px;
+    border-radius: 5px;
+    border: none;
+    background-color: orange;
+    color: white;
+}
+
+.cancelEditButton{
+    width: 120px;
+    height: 45px;
+    border-radius: 5px;
+    border: none;
+    background-color: darkred;
+    color: white;
+}
+
+.addButtonInsideForm{
+    background-color: #158638 !important;
+}
+
+.addFromExistingButton{
+    width: 120px;
+    height: 45px;
+    border: none;
+    background-color: #158638;
+    color: white;
+}
+
+
+.test:before {
+    content: "";
+    display: block;
+    background: url("icon.jpg") no-repeat;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 0 6px 0 0;
+}
+
+
+@media only screen and (max-width: 600px) {
+   .addButttonHolder{
+    width: 100%;
+    height: 45px;
+    position: fixed;
+    right: 0;
+}
+
+.addNewButtonSingleButton{
+    width: 120px;
+}
+
+.homePageButtonSurvey{
+    width: 80%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.homePageButton{
+  width: 70%;
+    padding-top: 10px;
+    padding-bottom: 10px;  
+}
+}
+
 
