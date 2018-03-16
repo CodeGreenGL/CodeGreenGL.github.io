@@ -1,48 +1,45 @@
-<ion-view view-title="Surveys" can-swipe-back="false">
-
+<ion-view view-title="Questions" can-swipe-back="false">
+    
     <ion-nav-bar class="bar-dark" align-title="center">
         <ion-nav-buttons side="right">
             <button class="button button-outline button-light icon ion-ios-search-strong" ng-click="vm.searchInputEnabled = !vm.searchInputEnabled"></button>
         </ion-nav-buttons>
         <ion-nav-back-button/>
     </ion-nav-bar>
-
-    <button class="button button-float button-positive" ng-click="vm.addSurvey()">
-        <i class="icon ion-plus-round"></i>
-    </button>
-
+    
     <ion-content class="has-header">
         
         <div class="searchBar">
-            <input class="col" placeholder="Search" ng-model="vm.searchInput.introductionMessage" ng-show="vm.searchInputEnabled"/>
+            <input class="col" placeholder="Search" ng-model="vm.searchInput.questionText" ng-show="vm.searchInputEnabled"/>
         </div>
         
         <div ng-hide="vm.hideList()">
             <md-list>
-                <md-list-item ui-sref="sections_list({surveyId: survey.id})" ng-repeat="survey in vm.surveys | orderBy: 'introductionMessage' | filter: vm.searchInput" class="item-button-right">{{survey.introductionMessage}}
-                    <button ng-click="vm.showActionMenu($event, survey.id)" class="button button-icon icon ion-navicon actionMenuButton md-secondary"></button>
+                <md-list-item ng-repeat="question in vm.questions | orderBy: 'questionText' | filter: vm.searchInput">
+                    {{question.questionText}}
+                    <md-checkbox class="md-secondary" ng-model="question.adding" aria-label="Qaddfe"></md-checkbox>
                 </md-list-item>
             </md-list>
         </div>
-
+        
         <div ng-hide="vm.hideNoItems()" class="backgroundText">
-            <h1 class="dark">No Items Yet!</h1>
+            <h1 class="dark">No more questions!</h1>
         </div>
-
+        
         <div ng-hide="!vm.stillWaiting()" class="backgroundText">
             <div>
                 <h1 class="dark">Updating</h1>
             </div>
-
+            
             <div class="spinner">
-                <ion-spinner icon="ios" class="spinner-dark" />
+                <ion-spinner icon="ios" class="spinner-dark"/>
             </div>
         </div>
-
+        
     </ion-content>
-
+    
     <ion-footer-bar class="bar bar-dark bar-footer row">
-        <i class="col-20"></i>
+        <i class="col-20"><button ng-click="vm.addQuestions()">Add questions</button></i>
     </ion-footer-bar>
-
+    
 </ion-view>

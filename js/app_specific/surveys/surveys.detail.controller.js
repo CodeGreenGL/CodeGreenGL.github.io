@@ -7,20 +7,22 @@
         .controller('surveysDetailCtrl', control);
 
     control.$inject = [
-        '$state',
+        '$ionicHistory',
         '$stateParams',
         'surveysSrvc'
     ];
 
     function control(
-        $state,
+        $ionicHistory,
         $stateParams,
         surveysSrvc
     ) {
-        angular.extend(this, {
-            survey: surveysSrvc.getSurveyAt($stateParams.selected),
-            submitButton: function () {
-                $state.go('surveys_list');
+        var vm = angular.extend(this, {
+            survey: surveysSrvc.getSurveyAt($stateParams.surveyId),
+            updateSurvey: function () {
+                surveysSrvc.updateSurvey(vm.survey).then(function () {
+                    $ionicHistory.goBack();
+                });
             }
         });
     }

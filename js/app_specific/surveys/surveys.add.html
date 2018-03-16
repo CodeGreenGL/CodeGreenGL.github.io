@@ -1,0 +1,29 @@
+<ion-view view-title="Add Survey" can-swipe-back="false">
+
+    <ion-nav-bar class="bar-dark" align-title="center">
+        <ion-nav-back-button/>
+    </ion-nav-bar>
+    
+    <ion-content class="has-header">
+        <form name="addSurvey" ng-submit="vm.createSurvey()" class="list list-inset">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Introduction Message</span>
+                <input type="text" placeholder="Student questionnaire introduction" ng-model="vm.survey.introductionMessage" ng-required="true"/>
+            </label>
+
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Completion Message</span>
+                <input type="text" placeholder="Thank you for completing the survey!" ng-model="vm.survey.completionMessage" ng-required="true"/>
+            </label>
+
+            <label class="row">
+                <button class="button button-positive col-50 col-offset-25" type="submit" ng-disabled="addSurvey.$invalid">Create Survey</button>
+            </label>
+        </form>
+    </ion-content>
+    
+    <ion-footer-bar class="bar bar-dark bar-footer row">
+        <i class="col-20"></i>
+    </ion-footer-bar>
+
+</ion-view>

@@ -1,4 +1,5 @@
-/*global angular */
+/*global angular, console */
+/* eslint no-console: 0*/
 (function () {
     'use strict';
 
@@ -16,60 +17,94 @@
         $http
     ) {
         //get all surveys from codegreen restlet; returns deferred promise
-        var surveysArray = [],
-            waitingState = false, // Set waitingstate to false so surveys load
-            service = {},
+        var surveysUrl = "https://codegreen.restlet.net/v2/surveys/",
+            surveysArray = [],
+            waitingState = false,
             getAllSurveys = function () {
                 var deferred = $q.defer();
-                
-                $http({
-                    url: 'https://codegreen.restlet.net/v1/surveys/',
-                    headers: {
-                        "authorization": "Basic OTQwZjRjNDctOWJjMS00N2E5LTgxZWQtMWNmMmViNDljOGRlOmIzYWU4MTZiLTk1ZTUtNGMyNy1iM2ZjLWRkY2ZmNjZhYjI2Nw==",
-                        "content-type": "application/json",
-                        "accept": "application/json"
-                    }
-                }).then(function successCallback(response) {
+                $http.get(surveysUrl).then(function successCallback(response) {
                     surveysArray = response.data;
                     deferred.resolve(surveysArray);
                 }, function errorCallback(response) {
-                    console.error('Error while fetching notes');
+                    console.error('Error while fetching all surveys');
                     console.error(response);
                 });
-                
                 return deferred.promise;
+            },
+            deleteSurveyID = function (surveyID) {
+                var deferred = $q.defer();
+                $http.delete(surveysUrl + surveyID).then(function successCallback() {
+                    deferred.resolve();
+                }, function errorCallback(response) {
+                    console.error('Error while deleting surveyID');
+                    console.error(response);
+                });
+                return deferred.promise;
+            },
+            updateSurvey = function (localSurvey) {
+                var updatedSurvey,
+                    deferred = $q.defer();
+                $http.put(surveysUrl + localSurvey.id, localSurvey).then(function successCallback(response) {
+                    updatedSurvey = response.data;
+                    deferred.resolve(updatedSurvey);
+                }, function errorCallback(response) {
+                    console.error('Error while updating section from survey');
+                    console.error(response);
+                });
+                return deferred.promise;
+            },
+            createSurvey = function (surveyObject) {
+                var addedSurvey,
+                    deferred = $q.defer();
+                $http.post(surveysUrl, surveyObject).then(function successCallback(response) {
+                    addedSurvey = response.data;
+                    //Add the survey to our surveyArray               
+                    surveysArray.push(addedSurvey);
+                    deferred.resolve(addedSurvey);
+                }, function errorCallback(response) {
+                    console.error('Error while creating survey');
+                    console.error(response);
+                });
+                return deferred.promise;
+            },
+            service = {
+                updateAllSurveys: function () {
+                    surveysArray = [];
+                    return getAllSurveys();
+                },
+                deleteSurvey: function (surveyID) {
+                    return deleteSurveyID(surveyID);
+                },
+                updateSurvey: function (survey) {
+                    var surveyObject = {
+                        id: survey.id,
+                        introductionMessage: survey.introductionMessage,
+                        completionMessage: survey.completionMessage,
+                        sectionIds: survey.sectionIds
+                    };
+                    return updateSurvey(surveyObject);
+                },
+                getSurveys: function () {
+                    return angular.copy(surveysArray);
+                },
+                getNumSurveys: function () {
+                    return surveysArray.length;
+                },
+                getSurveyAt: function (surveyID) {
+                    return surveysArray.find(function (survey) {
+                        return survey.id === surveyID;
+                    });
+                },
+                createSurvey: function (surveyObject) {
+                    return createSurvey(surveyObject);
+                },
+                isWaiting: function (iWait) {
+                    waitingState = iWait;
+                },
+                isItWaiting: function () {
+                    return waitingState;
+                }
             };
-
-        var promiseToUpdateSurveys = function () {
-            // returns a promise
-            return getAllSurveys();
-        };
-
-        service.updateSurveys = function () {
-            return promiseToUpdateSurveys();
-        };
-
-        service.getSurveys = function () {
-            return angular.copy(surveysArray);
-        };
-
-        service.getNumSurveys = function () {
-            return surveysArray.length;
-        };
-
-        service.getSurveyAt = function (index) {
-            return angular.copy(surveysArray[index]);
-        };
-        
-        service.isWaiting = function (iWait) {
-            waitingState = iWait;
-        };
-
-        service.isItWaiting = function () {
-            return waitingState;
-        };
-            
         return service;
     }
-
 }());
